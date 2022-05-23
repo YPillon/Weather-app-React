@@ -31,9 +31,16 @@ body {
 
 .app {
   height: 100%;
-  background-image: url("../images/bgNord.jpg");
   background-size: auto 100%;
   background-position: 69%;
+}
+
+.north {
+  background-image: url("../images/bgNord.jpg");
+}
+
+.south {
+  background-image: url("../images/bgSud.jpg");
 }
 
 main {
@@ -54,6 +61,11 @@ main {
   width: 100%;
   height: 50px;
   margin-top: -25px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  z-index: 1;
 }
 
 .searchBar {
@@ -76,8 +88,53 @@ main {
   color: #023a5e;
 }
 
+.hidden {
+  opacity: 0;
+}
+
+@keyframes appearAndDisappear {
+  0% {
+  }
+  25% {
+    transform: translateY(2px);
+  }
+  30% {
+    transform: translateY(0px);
+  }
+  75% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(0px);
+  }
+}
+
+.onError {
+  background-color: rgb(223, 97, 97);
+  font-size: 1.2rem;
+  width: fit-content;
+  margin-top: 15px;
+  padding: 0.5rem 0.9rem;
+  border-radius: 1rem;
+
+  z-index: -1;
+  opacity: 0;
+  transform: translateY(-100px);
+
+  animation: appearAndDisappear 2.5s ease-out;
+}
+
+.welcomeMessage {
+  font-family: "Bodoni FLF";
+  text-align: center;
+  margin-top: 36%;
+  line-height: 3.2rem;
+  font-size: 2.7rem;
+}
+
 .locationBox {
-  margin-top: 90px;
+  margin-top: 34%;
   height: 85px;
   display: flex;
   flex-direction: column;
@@ -90,6 +147,7 @@ main {
   font-family: "Bodoni FLF";
   font-style: italic;
   letter-spacing: 0.2rem;
+  text-align: center;
   text-transform: uppercase;
   font-size: 2.5rem;
 }
@@ -100,7 +158,7 @@ main {
 
 .weather {
   font-size: 6rem;
-  margin-top: 45px;
+  margin-top: 16%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -127,8 +185,6 @@ main {
 
 .icon {
   animation: topDown 6.5s linear infinite;
-  text-shadow: rgba(0, 0, 0, 0.2) 3px 3px;
-  color: red;
 }
 
 .temperature {
@@ -136,7 +192,7 @@ main {
 }
 
 .btn {
-  margin-top: 60px;
+  margin-top: 27%;
   color: #023a5e;
   font-size: 1.1rem;
   padding: 10px 17px;
