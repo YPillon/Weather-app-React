@@ -16,34 +16,6 @@ function App() {
   const [weather, setWeather] = useState({});
   const [error, setError] = useState("");
 
-  const defineCurrentLocation = () => {
-    if (weather.main) {
-      if (weather.name.includes("Arrondissement de")) {
-        let temporaryCityName = weather.name.split(" ");
-
-        temporaryCityName.reverse().splice(-2, 2);
-        let cityName = temporaryCityName.reverse();
-        return `${cityName}, ${weather.sys.country}`;
-      } else {
-        return `${weather.name}, ${weather.sys.country}`;
-      }
-    } else {
-      return "";
-    }
-  };
-
-  const currentTemperature = weather.main
-    ? `${Math.round(weather.main.temp)}`
-    : "";
-
-  const currentWeather = weather.main
-    ? {
-        weather: weather.weather[0].main,
-        sunrise: weather.sys.sunrise,
-        sunset: weather.sys.sunset,
-      }
-    : "";
-
   const search = (query) => {
     fetch(`${api.base}weather?q=${query}&units=metric&appid=${api.key}`)
       .then((res) => res.json())
@@ -67,6 +39,38 @@ function App() {
     search(value);
   };
 
+  const defineCurrentLocation = () => {
+    if (weather.main) {
+      if (weather.name.includes("Arrondissement de")) {
+        let temporaryCityName = weather.name.split(" ");
+
+        temporaryCityName.reverse().splice(-2, 2);
+        let cityName = temporaryCityName.reverse();
+        return `${cityName}, ${weather.sys.country}`;
+      } else {
+        return `${weather.name}, ${weather.sys.country}`;
+      }
+    } else {
+      return "";
+    }
+  };
+
+  let locationForUrl = defineCurrentLocation()
+    .split(",")[0]
+    .toLocaleLowerCase();
+
+  const currentTemperature = weather.main
+    ? `${Math.round(weather.main.temp)}`
+    : "";
+
+  const currentWeather = weather.main
+    ? {
+        weather: weather.weather[0].main,
+        sunrise: weather.sys.sunrise,
+        sunset: weather.sys.sunset,
+      }
+    : "";
+
   const isSouthernCountry = () => {
     if (weather.main && weather.coord.lat < 35 && weather.coord.lat > -35) {
       return "app south";
@@ -86,7 +90,7 @@ function App() {
               temperature={currentTemperature}
               weather={currentWeather}
             />
-            <ButtonSevenDays />
+            <ButtonSevenDays location={locationForUrl} />
           </React.Fragment>
         )}
         {!weather.main && (

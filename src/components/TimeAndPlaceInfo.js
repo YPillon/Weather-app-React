@@ -1,4 +1,5 @@
 import React from "react";
+import CurrentLocation from "./CurrentLocation";
 
 function TimeAndPlaceInfo(props) {
     const dateBuilder = (date) => {
@@ -34,7 +35,7 @@ function TimeAndPlaceInfo(props) {
   
     return (
       <div className="locationBox">
-        <h1 className="location">{props.location}</h1>
+        <CurrentLocation location={props.location} />
         <h2 className="date">{dateBuilder(new Date())}</h2>
       </div>
     );
