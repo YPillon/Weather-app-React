@@ -4,7 +4,7 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import App from "./App";
-import SevenDaysPage from "./components/SevenDaysPage";
+import SevenDaysPage from "./components/SevenDayPage";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -19,7 +19,7 @@ root.render(
         }
       />
       <Route path="sevendays">
-        <Route path=":location" element={<SevenDaysPage />} />
+        <Route path=":location/:countryCode" element={<SevenDaysPage />} />
       </Route>
     </Routes>
   </BrowserRouter>

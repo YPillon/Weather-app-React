@@ -1,36 +1,31 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import SearchBar from "./components/SearchBar";
 import TimeAndPlaceInfo from "./components/TimeAndPlaceInfo";
 import WeatherAndTemperature from "./components/WeatherAndTemperature";
 import ButtonSevenDays from "./components/ButtonSevenDays";
 
+import { api } from "./assets/js/data";
+
 import "./assets/css/index.css";
 
-const api = {
-  key: process.env.REACT_APP_API_KEY,
-  base: "https://api.openweathermap.org/data/2.5/",
-};
-
 function App() {
+  const [isSouthernCountry, setIsSouthernCountry] = useState(false);
   const [weather, setWeather] = useState({});
   const [error, setError] = useState("");
 
   const search = (query) => {
-    fetch(`${api.base}weather?q=${query}&units=metric&appid=${api.key}`)
+    fetch(`${api.base}weather?q=${query}&units=metric&lang=fr&appid=${api.key}`)
       .then((res) => res.json())
       .then((result) => {
         if (result.cod === "404") {
-          console.log(result);
           setError(result.message);
-          console.log(result.message);
           setTimeout(() => {
             setError("");
           }, 3000);
         } else {
           setWeather(result);
           setError("");
-          console.log(result);
         }
       });
   };
@@ -55,9 +50,17 @@ function App() {
     }
   };
 
-  let locationForUrl = defineCurrentLocation()
-    .split(",")[0]
-    .toLocaleLowerCase();
+  const defineLocationUrl = () => {
+    if (weather.main) {
+      return defineCurrentLocation().split(", ")[0].toLowerCase();
+    } else return "";
+  };
+
+  const defineCountryCodeUrl = () => {
+    if (weather.main) {
+      return defineCurrentLocation().split(", ")[1].toLowerCase();
+    } else return "";
+  };
 
   const currentTemperature = weather.main
     ? `${Math.round(weather.main.temp)}`
@@ -71,16 +74,16 @@ function App() {
       }
     : "";
 
-  const isSouthernCountry = () => {
-    if (weather.main && weather.coord.lat < 35 && weather.coord.lat > -35) {
-      return "app south";
+  useEffect(() => {
+    if (weather.coord && weather.coord.lat < 35 && weather.coord.lat > -35) {
+      setIsSouthernCountry(true);
     } else {
-      return "app north";
+      setIsSouthernCountry(false);
     }
-  };
+  }, [weather.coord]);
 
   return (
-    <div className={isSouthernCountry()}>
+    <div className={isSouthernCountry === true ? "app south" : "app north"}>
       <main>
         <SearchBar searchFunction={handleSearch} error={error} />
         {weather.main && (
@@ -90,14 +93,19 @@ function App() {
               temperature={currentTemperature}
               weather={currentWeather}
             />
-            <ButtonSevenDays location={locationForUrl} />
+            <ButtonSevenDays
+              location={defineLocationUrl()}
+              countryCode={defineCountryCodeUrl()}
+            />
           </React.Fragment>
         )}
         {!weather.main && (
-          <h1 className="welcomeMessage">
-            Bienvenue sur Meteolia! <br />
-            Entrez le nom de votre ville.
-          </h1>
+          <div className="welcomeBox">
+            <h1 className="welcomeMessage">
+              Bienvenue sur Meteolia! <br />
+              Entrez le nom de votre ville.
+            </h1>
+          </div>
         )}
       </main>
     </div>

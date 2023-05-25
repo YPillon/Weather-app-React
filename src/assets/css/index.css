@@ -31,20 +31,23 @@ body {
 
 .app {
   height: 100%;
-  background-size: auto 100%;
-  background-position: 69%;
 }
 
 .north {
   background-image: url("../images/bgNord.jpg");
+  background-size: auto 100%;
+  background-position: 69%;
 }
 
 .south {
   background-image: url("../images/bgSud.jpg");
+  background-size: auto 100%;
+  background-position: 69%;
 }
 
 main {
   min-height: 100%;
+  width: 100%;
   background-image: linear-gradient(
     to bottom,
     rgba(0, 0, 0, 0.1),
@@ -53,6 +56,7 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-between;
 
   padding: 25px;
 }
@@ -125,21 +129,20 @@ main {
   animation: appearAndDisappear 2.5s ease-out;
 }
 
+.welcomeBox {
+  height: 70vh;
+}
+
 .welcomeMessage {
   font-family: "Bodoni FLF";
   text-align: center;
-  margin-top: 36%;
+  /*margin-top: 36%;*/
   line-height: 3.2rem;
   font-size: 2.7rem;
 }
 
 .locationBox {
-  margin-top: 34%;
-  height: 85px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
+  height: 4vh;
   text-shadow: rgba(0, 0, 0, 0.2) 3px 3px;
 }
 
@@ -150,6 +153,7 @@ main {
   text-align: center;
   text-transform: uppercase;
   font-size: 2.5rem;
+  margin-bottom: 10px;
 }
 
 .date {
@@ -158,10 +162,11 @@ main {
 
 .weather {
   font-size: 6rem;
-  margin-top: 16%;
+  height: 22vh;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: flex-end;
   text-shadow: rgba(0, 0, 0, 0.2) 3px 3px;
 }
 
@@ -191,14 +196,14 @@ main {
   font-family: "Bodoni FLF";
 }
 
-.link {
-  margin-top: 27%;
+.buttonBox {
+  height: 23vh;
 }
 
 .btn {
   color: #023a5e;
   font-size: 1.1rem;
-  padding: 10px 17px;
+  padding: 12px 17px 10px;
   border-radius: 40px;
   letter-spacing: 0.1rem;
   line-height: 1.6rem;
@@ -210,28 +215,25 @@ main {
 
 .btn-return {
   font-size: 3rem;
-  position: absolute;
-  left: 10%;
+  width: 100%;
+  padding-left: 10px;
 }
 
 .infoBox {
-  margin-top: 45%;
-  height: 140px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
+  height: 17vh;
   text-shadow: rgba(0, 0, 0, 0.2) 3px 3px;
 }
 
 .infoBox h1 {
   text-align: center;
   font-weight: 100;
+  margin-bottom: 13px;
 }
 
 .sevenDayTable {
-  margin-top: 37%;
   width: 90%;
+  max-width: 400px;
+  height: 48vh;
 }
 
 .oneDayForecast {
@@ -247,5 +249,69 @@ main {
 }
 
 .oneDayForecast span:first-child {
-  width: 40%;
+  width: 45%;
+}
+
+.oneDayForecast span:last-child {
+  width: 25%;
+  text-align: right;
+}
+
+.noForecastAvailable {
+  height: 48vh;
+  font-size: 1.5rem;
+  text-align: center;
+  line-height: 2rem;
+  padding: 1rem;
+}
+
+@media screen and (max-height: 750px) {
+  .weather {
+    justify-content: flex-start;
+    height: 28vh;
+  }
+}
+
+@media screen and (min-width: 750px) {
+  body {
+    font-size: 1.4rem;
+  }
+
+  .searchBox {
+    width: 70%;
+  }
+
+  .searchBar {
+    font-size: 1.6rem;
+  }
+
+  .location {
+    font-size: 3.2rem;
+  }
+
+  .weather {
+    font-size: 8rem;
+    height: 28vh;
+  }
+
+  .icon {
+    margin-bottom: 20px;
+  }
+
+  .btn {
+    font-size: 1.5rem;
+    padding: 19px 24px 14px;
+    line-height: 1.9rem;
+    border-radius: 43px;
+  }
+
+  .oneDayForecast {
+    font-size: 2rem;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .north {
+    background-position: center;
+  }
 }
